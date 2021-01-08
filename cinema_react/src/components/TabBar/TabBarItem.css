@@ -59,6 +59,8 @@ button.tabbar-img-button.btn.btn-light:hover {
 
 .tab-homepage.nav.nav-tabs a {
   color: #888;
+  font-size: 25px;
+
 }
 
 .tab-homepage.nav.nav-tabs a.active {

@@ -22,6 +22,10 @@ ol.breadcrumb {
   color: #aaa;
 }
 
+.breadcrumb a:hover {
+  color: #ea5a14;
+  text-decoration: none;
+}
 .border-bt{
   border-bottom: orangered solid 2px;
 }

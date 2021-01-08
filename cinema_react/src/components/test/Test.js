@@ -3,22 +3,15 @@ import {
   Button,
   Popper,
   Grow,
+  Container,
   Paper,
   ClickAwayListener,
   MenuList,
   MenuItem,
-  Modal,
-  Fade,
-  Backdrop,
 } from "@material-ui/core";
-import Avatar from "@material-ui/core/Avatar";
 
-import BuyCard from "../../components/BuyCard/BuyCard";
-
-function MenuLogin() {
-  const [user, serUser] = useState("Vybeo");
+function Test() {
   const [open, setOpen] = useState(false);
-  const [show, setShow] = useState(false);
   const anchorRef = useRef(null);
 
   const handleToggle = () => {
@@ -33,13 +26,6 @@ function MenuLogin() {
     setOpen(false);
   };
 
-  const handleShow = () => {
-    setShow(true);
-  };
-
-  const handleCloseShow = () => {
-    setShow(false);
-  };
   function handleListKeyDown(event) {
     if (event.key === "Tab") {
       event.preventDefault();
@@ -58,15 +44,14 @@ function MenuLogin() {
   }, [open]);
 
   return (
-    <>
+    <Container style={{ minHeight: "150vh" }}>
       <Button
         ref={anchorRef}
         aria-controls={open ? "menu-list-grow" : undefined}
         aria-haspopup="true"
         onClick={handleToggle}
-        startIcon={<Avatar>V</Avatar>}
       >
-        {user}
+        Toggle Menu Grow
       </Button>
       <Popper
         open={open}
@@ -74,7 +59,6 @@ function MenuLogin() {
         role={undefined}
         transition
         disablePortal
-        style={{ zIndex: "100" }}
       >
         {({ TransitionProps, placement }) => (
           <Grow
@@ -91,36 +75,7 @@ function MenuLogin() {
                   id="menu-list-grow"
                   onKeyDown={handleListKeyDown}
                 >
-                  <MenuItem onClick={handleClose}>History</MenuItem>
-                  <MenuItem>
-                    <span style={{marginTop: '15px'}}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className="mr-3"
-                        onClick={handleShow}
-                      >
-                        Nạp Card
-                      </Button>
-
-                      <Modal
-                        aria-labelledby="transition-modal-title"
-                        aria-describedby="transition-modal-description"
-                        // className={classes.modal}
-                        open={show}
-                        onClose={handleCloseShow}
-                        closeAfterTransition
-                        BackdropComponent={Backdrop}
-                        BackdropProps={{
-                          timeout: 500,
-                        }}
-                      >
-                        <Fade>
-                          <BuyCard />
-                        </Fade>
-                      </Modal>
-                    </span>
-                  </MenuItem>
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
                   <MenuItem onClick={handleClose}>My account</MenuItem>
                   <MenuItem onClick={handleClose}>Logout</MenuItem>
                 </MenuList>
@@ -129,8 +84,8 @@ function MenuLogin() {
           </Grow>
         )}
       </Popper>
-    </>
+    </Container>
   );
 }
 
-export default MenuLogin;
+export default Test;

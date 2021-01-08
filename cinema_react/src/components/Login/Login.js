@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import axios from "axios";
 
-import './Login.css'
+import "./Login.css";
 
 class Login extends Component {
   state = {
@@ -25,9 +25,9 @@ class Login extends Component {
     // console.log(this.state);
 
     const dataUser = {
-        email: this.state.email,
-        password: this.state.pass,
-    }
+      email: this.state.email,
+      password: this.state.pass,
+    };
 
     axios
       .post("http://localhost:4000/login", dataUser)
@@ -66,10 +66,13 @@ class Login extends Component {
   render() {
     return (
       <Container>
-
-        <p style={{color: '#a0a3a7', margin: '25px 0px', fontSize: '14px'}}>Vui lòng đăng nhập trước khi mua vé để tích luỹ điểm, cơ hội nhận thêm nhiều ưu đãi từ chương trình thành viên Galaxy Cinema.</p>
+        <p style={{ color: "#a0a3a7", margin: "25px 0px", fontSize: "14px" }}>
+          Vui lòng đăng nhập trước khi mua vé để tích luỹ điểm, cơ hội nhận thêm
+          nhiều ưu đãi từ chương trình thành viên Galaxy Cinema.
+        </p>
         <Form onSubmit={this.submitFormLoginHandler}>
           <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email</Form.Label>
             <Form.Control
               type="email"
               placeholder="Email"
@@ -82,28 +85,39 @@ class Login extends Component {
             <Form.Control.Feedback type="invalid">
               Vui lòng nhập email
             </Form.Control.Feedback>
-            
           </Form.Group>
 
-          <Form.Group controlId="formBasicPassword" className='hold'>
+          <Form.Group controlId="formBasicPassword" className="hold">
+            <Form.Label>PassWord</Form.Label>
             <Form.Control
-              className='hold'
+              className="hold"
               type="password"
               placeholder="Mật khẩu"
               name="pass"
               value={this.state.pass}
               onChange={this.changeValueHandler}
-            //   isInvalid={!this.state.pass_validate}
-            //   onBlur={this.validatePassHandler}
+              //   isInvalid={!this.state.pass_validate}
+              //   onBlur={this.validatePassHandler}
             />
             <Form.Control.Feedback type="invalid">
               Vui lòng nhập mật khẩu ( từ 6 đến 20 kí tự, 1 hoa, 1 thường, 1 số)
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="formBasicQMK">
-            <Form.Label style={{color: '#a0a3a7'}}>Quên mật khẩu?</Form.Label>
+            <Form.Label style={{ color: "#a0a3a7" }}>Quên mật khẩu?</Form.Label>
           </Form.Group>
-          <Button className='p-2' style={{background: '#e26435', width: '100%', border: 'none', marginBottom: '25px', fontWeight: '600', borderRadius: 'unset'}} type="submit">
+          <Button
+            className="p-2"
+            style={{
+              background: "#e26435",
+              width: "100%",
+              border: "none",
+              marginBottom: "25px",
+              fontWeight: "600",
+              borderRadius: "unset",
+            }}
+            type="submit"
+          >
             ĐĂNG NHẬP
           </Button>
         </Form>

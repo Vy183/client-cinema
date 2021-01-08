@@ -13,6 +13,7 @@ import "./DetailFilm.css";
 
 import phim1 from '../../assest/img/c11.jpg';
 // import phim2 from '../../assest/img/c12.jpg';
+import CommentFilm from '../CommentFilm/CommentFilm';
 
 class DetailFilm extends Component {
   state = {
@@ -51,10 +52,10 @@ class DetailFilm extends Component {
               <Row className="mt-3">
                 <Col md={8}>
                   <Row>
-                    <Col md={4}>
+                    <Col md={4} style={{ margin: '60px 0px' }}>
                       <img
                         className="ml-4"
-                        style={{ width: "100%", height: "300px" }}
+                        style={{ width: "100%", height: "85%", borderRadius: '4px' }}
                         src={this.state.dataPhim.img}
                         alt={this.state.dataPhim.tenPhimEN}
                       />
@@ -78,8 +79,7 @@ class DetailFilm extends Component {
                           Diễn viên: <span>{this.state.dataPhim.dienVien}</span>
                         </li>
                         <li>
-                          Nhà sản xuất
-                          <span>{this.state.dataPhim.nhaSXuat}</span>
+                          Nhà sản xuất: <span>{this.state.dataPhim.nhaSXuat}</span>
                         </li>
                         <li>
                           Quốc gia: <span>{this.state.dataPhim.quocGia}</span>
@@ -132,6 +132,7 @@ class DetailFilm extends Component {
         >
           Quay lại trang trước
         </Button>
+        <CommentFilm/>
       </Container>
     );
   }

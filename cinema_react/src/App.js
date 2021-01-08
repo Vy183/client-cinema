@@ -12,6 +12,11 @@ import DetailFilm from './components/DetailFilm/DetailFilm';
 // import FormLR from './components/FormLR/FormLR';
 import Page404 from './components/Page404/Page404';
 // import MenuLogin from './components/MenuLogin/MenuLogin';
+import Test from './components/test/Test'
+// import BuyCard from "./components/BuyCard/BuyCard"
+import Test1 from './components/Test1';
+// import AboutCinema from "./components/AboutCinema/AboutCinema";
+import CommentFilm from './components/CommentFilm/CommentFilm';
 
 function App() {
     return (
@@ -23,7 +28,10 @@ function App() {
                 <Route path="/mua-ve" component={FormBuy} />
                 <Route path="/chi-tiet/:idPhim" component={DetailFilm} />
                 <Route exact path="/" component={HomePage} />
+                <Route path='/test' component={Test} />
+                {/* <Route path='/about' component={AboutCinema}/> */}
                 <Route component={Page404}/>
+
             </Switch>
             {/* <HomePage />
             <MuaVe />
@@ -33,6 +41,9 @@ function App() {
             {/* <Login /> */}
             {/* <FormLR/> */}
             {/* <MenuLogin/> */}
+            {/* <Test1/> */}
+
+            {/* <CommentFilm/> */}
         </div>
     );
 }

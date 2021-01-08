@@ -73,7 +73,7 @@ function ControlledTabs() {
   const [key, setKey] = useState("phimdangchieu");
 
   return (
-    <Container>
+    <Container className='mt-4'>
       <Tabs
         id="controlled-tab-example"
         activeKey={key}

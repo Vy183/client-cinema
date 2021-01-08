@@ -11,6 +11,7 @@ class Register extends Component {
     pass: "",
     cmpass: "",
     diachi: "",
+    diachiRender: [],
     date_of_birth: Date().toLocaleString(),
 
     validate_ho_ten: true,
@@ -30,6 +31,8 @@ class Register extends Component {
   submitFormRegisterHandler = (e) => {
     e.preventDefault();
 
+    // console.log(this.state);
+
     const userData = {
       email: this.state.email,
       password: this.state.pass,
@@ -40,10 +43,23 @@ class Register extends Component {
       phone_number: this.state.sdt,
     };
 
+    console.log(userData);
+
+    // axios
+    //   .post("http://localhost:4000/signup", userData)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  };
+
+  componentDidMount = () => {
     axios
-      .post("http://localhost:4000/signup", userData)
+      .get("https://dc.tintoc.net/app/api-customer/public/provinces?size=100")
       .then((res) => {
-        console.log(res.data);
+        this.setState({ diachiRender: res.data });
       })
       .catch((err) => {
         console.log(err);
@@ -125,9 +141,14 @@ class Register extends Component {
 
   render() {
     return (
-      <Container className='p-auto'>
-        <Form onSubmit={this.submitFormRegisterHandler} className='mt-4' style={{ borderRadius: 'none', padding: 'auto' , margin: 'auto'}}>
-          <Form.Group controlId="formBasicEmail">
+      <Container className="p-auto">
+        <Form
+          onSubmit={this.submitFormRegisterHandler}
+          className="mt-4"
+          style={{ borderRadius: "none", padding: "auto", margin: "auto" }}
+        >
+          <Form.Group controlId="formBasicName">
+            <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
               placeholder="Họ Tên"
@@ -144,6 +165,7 @@ class Register extends Component {
 
           <Form.Row>
             <Form.Group as={Col} controlId="formGridSDT">
+              <Form.Label>Số Điện Thoại</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Số điện thoại"
@@ -157,7 +179,8 @@ class Register extends Component {
                 Vui lòng nhập sdt
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="exampleForm.SelectCustom">
+            <Form.Group controlId="exampleForm.SelectGender">
+              <Form.Label>Giới Tính</Form.Label>
               <Form.Control
                 as="select"
                 custom
@@ -169,8 +192,8 @@ class Register extends Component {
                   });
                 }}
               >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="male">Nam</option>
+                <option value="female">Nữ</option>
               </Form.Control>
               <Form.Control.Feedback type="invalid">
                 Vui lòng chọn giới tính
@@ -178,6 +201,7 @@ class Register extends Component {
             </Form.Group>
           </Form.Row>
           <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email</Form.Label>
             <Form.Control
               type="email"
               placeholder="Email"
@@ -193,7 +217,8 @@ class Register extends Component {
           </Form.Group>
 
           <Form.Row>
-            <Form.Group as={Col} controlId="formGridPd">
+            <Form.Group as={Col} controlId="formGridPw">
+              <Form.Label>Mật Khẩu</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Mật khẩu"
@@ -209,6 +234,7 @@ class Register extends Component {
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridRPd">
+              <Form.Label>Nhập Lại Mật Khẩu</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Nhập lại mật khẩu"
@@ -225,8 +251,9 @@ class Register extends Component {
           </Form.Row>
 
           <Form.Group controlId="formBasicDiaChi">
-            <Form.Control 
-              as="select" 
+            <Form.Label>Địa Chỉ</Form.Label>
+            <Form.Control
+              as="select"
               custom
               type="text"
               placeholder="Địa chỉ"
@@ -234,19 +261,21 @@ class Register extends Component {
               value={this.state.diachi}
               onChange={this.changeValueHandler}
             >
-              <option>HCM</option>
-              <option>HN</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+              {this.state.diachiRender.map((value, index) => {
+                return (
+                  <option key={value.name} value={value.name}>
+                    {value.name}
+                  </option>
+                );
+              })}
             </Form.Control>
 
-            
             <Form.Control.Feedback type="invalid">
               Vui lòng nhập địa chỉ
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="formBasicDate">
+            <Form.Label>Ngày Sinh</Form.Label>
             <Form.Control
               type="date"
               placeholder="Chọn ngày"
@@ -256,7 +285,17 @@ class Register extends Component {
               }}
             />
           </Form.Group>
-          <Button type="submit" className='p-2' style={{background: '#e26435', width: '100%', border: 'none', marginBottom: '30px', fontWeight: '600'}} >
+          <Button
+            type="submit"
+            className="p-2"
+            style={{
+              background: "#e26435",
+              width: "100%",
+              border: "none",
+              marginBottom: "30px",
+              fontWeight: "600",
+            }}
+          >
             Đăng ký
           </Button>
         </Form>
