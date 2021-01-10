@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Button, Col, Container } from "react-bootstrap";
 import axios from "axios";
+import { Alert } from "@material-ui/lab";
 
 class Register extends Component {
   state = {
@@ -14,12 +15,20 @@ class Register extends Component {
     diachiRender: [],
     date_of_birth: Date().toLocaleString(),
 
+    error: null,
+    success: null,
+
     validate_ho_ten: true,
     validate_sdt: true,
     validate_email: true,
     validate_pass: true,
     validate_cmpass: true,
     validate_diachi: true,
+  };
+
+  register = (ho_ten) => {
+    // console.log(this.state.ho_ten)
+    this.setState({ ho_ten: ho_ten });
   };
 
   changeValueHandler = (e) => {
@@ -41,18 +50,25 @@ class Register extends Component {
       gender: this.state.gtinh,
       date_of_birth: this.state.date_of_birth,
       phone_number: this.state.sdt,
+      cmpass: this.state.cmpass,
     };
 
-    console.log(userData);
+    this.setState({ error: null, success: null });
 
-    // axios
-    //   .post("http://localhost:4000/signup", userData)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .post("http://localhost:4000/signup", userData)
+      .then((res) => {
+        // console.log(res.data);
+        const { name, email } = res.data;
+        this.setState({
+          success: `Bạn đã đăng ký thành công ${name} dưới email ${email}`,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+
+        this.setState({ error: err.response.data.message });
+      });
   };
 
   componentDidMount = () => {
@@ -147,6 +163,14 @@ class Register extends Component {
           className="mt-4"
           style={{ borderRadius: "none", padding: "auto", margin: "auto" }}
         >
+          {this.state.error ? (
+            <Alert severity="error">{this.state.error}</Alert>
+          ) : null}
+
+          {this.state.success ? (
+            <Alert severity="success">{this.state.success}</Alert>
+          ) : null}
+
           <Form.Group controlId="formBasicName">
             <Form.Label>Name</Form.Label>
             <Form.Control
@@ -162,7 +186,6 @@ class Register extends Component {
               Vui lòng nhập họ tên
             </Form.Control.Feedback>
           </Form.Group>
-
           <Form.Row>
             <Form.Group as={Col} controlId="formGridSDT">
               <Form.Label>Số Điện Thoại</Form.Label>
@@ -215,7 +238,6 @@ class Register extends Component {
               Vui lòng nhập email
             </Form.Control.Feedback>
           </Form.Group>
-
           <Form.Row>
             <Form.Group as={Col} controlId="formGridPw">
               <Form.Label>Mật Khẩu</Form.Label>
@@ -249,7 +271,6 @@ class Register extends Component {
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
-
           <Form.Group controlId="formBasicDiaChi">
             <Form.Label>Địa Chỉ</Form.Label>
             <Form.Control

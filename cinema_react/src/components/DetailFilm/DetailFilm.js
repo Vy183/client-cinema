@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 // import axios from "axios";
 import { Container, Button, Col, Row, Breadcrumb } from "react-bootstrap";
 import { Button as MButton } from "@material-ui/core";
@@ -10,10 +12,9 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import data from "../../assest/dummydata/data";
 import "./DetailFilm.css";
 
-
-import phim1 from '../../assest/img/c11.jpg';
+import phim1 from "../../assest/img/c11.jpg";
 // import phim2 from '../../assest/img/c12.jpg';
-import CommentFilm from '../CommentFilm/CommentFilm';
+import CommentFilm from "../CommentFilm/CommentFilm";
 
 class DetailFilm extends Component {
   state = {
@@ -27,8 +28,6 @@ class DetailFilm extends Component {
     // console.log(dataPhim);
 
     this.setState({ dataPhim });
-
-
   }
 
   render() {
@@ -52,10 +51,14 @@ class DetailFilm extends Component {
               <Row className="mt-3">
                 <Col md={8}>
                   <Row>
-                    <Col md={4} style={{ margin: '60px 0px' }}>
+                    <Col md={4} style={{ margin: "60px 0px" }}>
                       <img
                         className="ml-4"
-                        style={{ width: "100%", height: "85%", borderRadius: '4px' }}
+                        style={{
+                          width: "100%",
+                          height: "85%",
+                          borderRadius: "4px",
+                        }}
                         src={this.state.dataPhim.img}
                         alt={this.state.dataPhim.tenPhimEN}
                       />
@@ -79,7 +82,8 @@ class DetailFilm extends Component {
                           Diễn viên: <span>{this.state.dataPhim.dienVien}</span>
                         </li>
                         <li>
-                          Nhà sản xuất: <span>{this.state.dataPhim.nhaSXuat}</span>
+                          Nhà sản xuất:{" "}
+                          <span>{this.state.dataPhim.nhaSXuat}</span>
                         </li>
                         <li>
                           Quốc gia: <span>{this.state.dataPhim.quocGia}</span>
@@ -89,14 +93,16 @@ class DetailFilm extends Component {
                         </li>
                       </div>
                       <div>
-                        <MButton
-                          variant="contained"
-                          color="primary"
-                          className="m-2"
-                          startIcon={<ConfirmationNumberIcon />}
-                        >
-                          Mua phim
-                        </MButton>
+                        <Link to={"/gio-hang/" + this.state.id}>
+                          <MButton
+                            variant="contained"
+                            color="primary"
+                            className="m-2"
+                            startIcon={<ConfirmationNumberIcon />}
+                          >
+                            Mua phim
+                          </MButton>
+                        </Link>
                         <MButton
                           variant="contained"
                           color="secondary"
@@ -109,14 +115,14 @@ class DetailFilm extends Component {
                     </Col>
                   </Row>
                   <div>
-                    <h3 className='border-bt'>Nội Dung Phim</h3>
+                    <h3 className="border-bt">Nội Dung Phim</h3>
                     <p>{this.state.dataPhim.nDung}</p>
                   </div>
                 </Col>
                 <Col md={4}>
-                  <h3 className='border-bt'>Phim Đang Chiếu</h3>
+                  <h3 className="border-bt">Phim Đang Chiếu</h3>
                   <div>
-                    <img src={phim1} alt=""/>
+                    <img src={phim1} alt="" />
                     <h4>Wonder Woman 1984</h4>
                   </div>
                 </Col>
@@ -132,7 +138,8 @@ class DetailFilm extends Component {
         >
           Quay lại trang trước
         </Button>
-        <CommentFilm/>
+
+        <CommentFilm />
       </Container>
     );
   }

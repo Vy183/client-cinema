@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import axios from "axios";
+import { Alert } from "@material-ui/lab";
 
 import "./Login.css";
 
@@ -10,6 +11,7 @@ class Login extends Component {
     pass: "",
     email_validate: true,
     pass_validate: true,
+    error: null,
   };
 
   changeValueHandler = (e) => {
@@ -29,13 +31,20 @@ class Login extends Component {
       password: this.state.pass,
     };
 
+    // console.log(dataUser);
+
+    this.setState({ error: null });
+
     axios
       .post("http://localhost:4000/login", dataUser)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
+        const { name, email } = res.data;
+        this.props.loginSuccess(name);
       })
       .catch((err) => {
         console.log(err);
+        this.setState({ error: err.response.data.message });
       });
   };
 
@@ -70,6 +79,10 @@ class Login extends Component {
           Vui lòng đăng nhập trước khi mua vé để tích luỹ điểm, cơ hội nhận thêm
           nhiều ưu đãi từ chương trình thành viên Galaxy Cinema.
         </p>
+        {this.state.error ? (
+          <Alert severity="error">{this.state.error}</Alert>
+        ) : null}
+
         <Form onSubmit={this.submitFormLoginHandler}>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email</Form.Label>
@@ -88,7 +101,7 @@ class Login extends Component {
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword" className="hold">
-            <Form.Label>PassWord</Form.Label>
+            <Form.Label>Mật khẩu</Form.Label>
             <Form.Control
               className="hold"
               type="password"
@@ -100,7 +113,7 @@ class Login extends Component {
               //   onBlur={this.validatePassHandler}
             />
             <Form.Control.Feedback type="invalid">
-              Vui lòng nhập mật khẩu ( từ 6 đến 20 kí tự, 1 hoa, 1 thường, 1 số)
+              Vui lòng nhập mật khẩu (từ 6 đến 20 kí tự)
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="formBasicQMK">

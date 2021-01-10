@@ -18,6 +18,7 @@ const data = [
     date: "25/11/2020",
     img: c1,
     tLuong: "114 phút",
+    thanh_tien: 50000,
     nDung:
       "Chỉ cần ngửi mùi đất, Kang Dong Goo có thể tìm ra được vị trí mộ cổ và kho báu. Vào một ngày, anh nhận được lời đề nghị hấp dẫn từ Yoon Sae Hee - quản lý cấp cao của Viện trưng bầy cổ vật. Liệu phi vụ lần này sẽ tiếp tục trót lọt hay còn âm mưu gì ẩn giấu phía sau? Phim mới Kẻ Đào Mộ dự kiến ra mắt ngày 4.12.2020 tại các rạp chiếu phim trên toàn quốc.",
   },
@@ -33,6 +34,7 @@ const data = [
     date: "10/12/2020",
     img: c2,
     tLuong: "114 phút",
+    thanh_tien: 80000,
     nDung:
       "Chỉ cần ngửi mùi đất, Kang Dong Goo có thể tìm ra được vị trí mộ cổ và kho báu. Vào một ngày, anh nhận được lời đề nghị hấp dẫn từ Yoon Sae Hee - quản lý cấp cao của Viện trưng bầy cổ vật. Liệu phi vụ lần này sẽ tiếp tục trót lọt hay còn âm mưu gì ẩn giấu phía sau? Phim mới Kẻ Đào Mộ dự kiến ra mắt ngày 4.12.2020 tại các rạp chiếu phim trên toàn quốc.",
   },
@@ -47,6 +49,7 @@ const data = [
     quocGia: "Việt Nam",
     date: "4/12/2020",
     tLuong: "114 phút",
+    thanh_tien: 350000,
     img: c3,
     nDung:
       "Chỉ cần ngửi mùi đất, Kang Dong Goo có thể tìm ra được vị trí mộ cổ và kho báu. Vào một ngày, anh nhận được lời đề nghị hấp dẫn từ Yoon Sae Hee - quản lý cấp cao của Viện trưng bầy cổ vật. Liệu phi vụ lần này sẽ tiếp tục trót lọt hay còn âm mưu gì ẩn giấu phía sau? Phim mới Kẻ Đào Mộ dự kiến ra mắt ngày 4.12.2020 tại các rạp chiếu phim trên toàn quốc.",
@@ -63,6 +66,7 @@ const data = [
     date: "4/12/2020",
     img: c4,
     tLuong: "114 phút",
+    thanh_tien: 250000,
     nDung:
       "Chỉ cần ngửi mùi đất, Kang Dong Goo có thể tìm ra được vị trí mộ cổ và kho báu. Vào một ngày, anh nhận được lời đề nghị hấp dẫn từ Yoon Sae Hee - quản lý cấp cao của Viện trưng bầy cổ vật. Liệu phi vụ lần này sẽ tiếp tục trót lọt hay còn âm mưu gì ẩn giấu phía sau? Phim mới Kẻ Đào Mộ dự kiến ra mắt ngày 4.12.2020 tại các rạp chiếu phim trên toàn quốc.",
   },
@@ -78,6 +82,7 @@ const data = [
     date: "4/12/2020",
     img: c5,
     tLuong: "114 phút",
+    thanh_tien: 750000,
     nDung:
       "Chỉ cần ngửi mùi đất, Kang Dong Goo có thể tìm ra được vị trí mộ cổ và kho báu. Vào một ngày, anh nhận được lời đề nghị hấp dẫn từ Yoon Sae Hee - quản lý cấp cao của Viện trưng bầy cổ vật. Liệu phi vụ lần này sẽ tiếp tục trót lọt hay còn âm mưu gì ẩn giấu phía sau? Phim mới Kẻ Đào Mộ dự kiến ra mắt ngày 4.12.2020 tại các rạp chiếu phim trên toàn quốc.",
   },
@@ -92,6 +97,7 @@ const data = [
     quocGia: "Hàn Quốc",
     date: "4/12/2020",
     tLuong: "114 phút",
+    thanh_tien: 100000,
     nDung:
       "Chỉ cần ngửi mùi đất, Kang Dong Goo có thể tìm ra được vị trí mộ cổ và kho báu. Vào một ngày, anh nhận được lời đề nghị hấp dẫn từ Yoon Sae Hee - quản lý cấp cao của Viện trưng bầy cổ vật. Liệu phi vụ lần này sẽ tiếp tục trót lọt hay còn âm mưu gì ẩn giấu phía sau? Phim mới Kẻ Đào Mộ dự kiến ra mắt ngày 4.12.2020 tại các rạp chiếu phim trên toàn quốc.",
     img: c6,

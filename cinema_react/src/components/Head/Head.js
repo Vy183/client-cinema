@@ -1,27 +1,25 @@
 import React, { Component } from "react";
-import { Form, Modal, Tabs, Tab } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import PersonIcon from "@material-ui/icons/Person";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 import "./Head.css";
 import imglogo from "../../assest/img/logo.png";
-import Login from "../Login/Login";
-import Register from "../Register/Register";
 import MenuLogin from "../MenuLogin/MenuLogin";
+import ButtonLogin from "../Login/ButtonLogin";
 
 export default class Head extends Component {
   state = {
-    show: false,
     key: "login",
+    user: "",
   };
 
-  handleClose = () => {
-    this.setState({ show: false });
+  loginSuccess = (user) => {
+    this.setState({ user: user });
   };
 
-  handleOpen = () => {
-    this.setState({ show: true });
+  logout = () => {
+    this.setState({ user: "" });
   };
 
   render() {
@@ -43,34 +41,26 @@ export default class Head extends Component {
 
         <div className="m-auto">
           <div className="d-flex">
-            <MenuLogin />
-
-            <Button
-              startIcon={<PersonIcon />}
-              onClick={this.handleOpen}
-              style={{ color: "#aaa" }}
-            >
-              Đăng nhập
-            </Button>
+            {this.state.user ? (
+              <MenuLogin user={this.state.user} logout={this.logout} />
+            ) : (
+              <ButtonLogin loginSuccess={this.loginSuccess} />
+            )}
           </div>
         </div>
 
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Body>
-            <Tabs
-              id="controlled-tab-example"
-              activeKey={this.key}
-              onSelect={(k) => this.setState({ key: k })}
-            >
-              <Tab eventKey="login" title="Đăng nhập">
-                <Login />
-              </Tab>
-              <Tab eventKey="register" title="Đăng ký">
-                <Register />
-              </Tab>
-            </Tabs>
-          </Modal.Body>
-        </Modal>
+        <Link to='/gio-hang'>
+          <div
+            className="mr-5 my-3"
+            style={{
+              background: "#f26c39",
+              padding: "5px",
+              borderRadius: "4px",
+            }}
+          >
+            <ShoppingCartIcon />
+          </div>
+        </Link>
       </div>
     );
   }

@@ -12,11 +12,12 @@ import DetailFilm from './components/DetailFilm/DetailFilm';
 // import FormLR from './components/FormLR/FormLR';
 import Page404 from './components/Page404/Page404';
 // import MenuLogin from './components/MenuLogin/MenuLogin';
-import Test from './components/test/Test'
+import Test from './components/test/Test';
 // import BuyCard from "./components/BuyCard/BuyCard"
 import Test1 from './components/Test1';
 // import AboutCinema from "./components/AboutCinema/AboutCinema";
-import CommentFilm from './components/CommentFilm/CommentFilm';
+import TabBar from './components/TabBar/TabBar';
+import FormCart from './components/FormCart/FormCart';
 
 function App() {
     return (
@@ -25,10 +26,11 @@ function App() {
             <Menu />
             <Switch>
                 {/* <Route path="/form-LR" component={FormLR}/> */}
-                <Route path="/mua-ve" component={FormBuy} />
+                <Route path="/mua-ve" component={TabBar} />
                 <Route path="/chi-tiet/:idPhim" component={DetailFilm} />
                 <Route exact path="/" component={HomePage} />
                 <Route path='/test' component={Test} />
+                <Route path='/gio-hang' component={FormCart}/>
                 {/* <Route path='/about' component={AboutCinema}/> */}
                 <Route component={Page404}/>
 
@@ -44,6 +46,7 @@ function App() {
             {/* <Test1/> */}
 
             {/* <CommentFilm/> */}
+            {/* <FormCart/> */}
         </div>
     );
 }

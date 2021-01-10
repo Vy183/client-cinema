@@ -15,8 +15,7 @@ import Avatar from "@material-ui/core/Avatar";
 
 import BuyCard from "../../components/BuyCard/BuyCard";
 
-function MenuLogin() {
-  const [user, serUser] = useState("Vybeo");
+function MenuLogin(props) {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const anchorRef = useRef(null);
@@ -64,9 +63,9 @@ function MenuLogin() {
         aria-controls={open ? "menu-list-grow" : undefined}
         aria-haspopup="true"
         onClick={handleToggle}
-        startIcon={<Avatar>V</Avatar>}
+        startIcon={<Avatar>{props.user[0]}</Avatar>}
       >
-        {user}
+        {props.user}
       </Button>
       <Popper
         open={open}
@@ -122,7 +121,7 @@ function MenuLogin() {
                     </span>
                   </MenuItem>
                   <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem onClick={props.logout}>Logout</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>

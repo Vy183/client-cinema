@@ -1,10 +1,10 @@
-import { Container, Avatar } from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 import React, { Component } from "react";
-import { Col, Row, Form, Button } from "react-bootstrap";
+import { Col, Row, Form, Container, Button } from "react-bootstrap";
 
 import dataComment from "../../assest/dummydata/dataComment";
 import avatar1 from "../../assest/img/ava1.jpg";
-import './CommentFilm.css';
+import "./CommentFilm.css";
 
 export default class CommentFilm extends Component {
   state = {
@@ -22,24 +22,29 @@ export default class CommentFilm extends Component {
 
   submitFormHandle = (e) => {
     e.preventDefault();
-    console.log(this.state.bluan);
-    const newComment = [...this.state.dataComment];
+    // console.log(this.state.bluan);
+  };
 
-    newComment.unshift({
-      id: Math.random(),
-      avartar: avatar1,
-      name: "VyyPii123",
-      content: this.state.bluan,
-      date: Date().toLocaleString(),
-    });
+  onPushCommentHandler = (e) => {
+    if (e.key === "Enter") {
+      const newComment = [...this.state.dataComment];
 
-    this.setState({ dataComment: newComment, bluan: "" });
+      newComment.unshift({
+        id: Math.random(),
+        avartar: avatar1,
+        name: "VyyPii123",
+        content: this.state.bluan,
+        date: Date().toLocaleString(),
+      });
+
+      this.setState({ dataComment: newComment, bluan: "" });
+    }
   };
 
   render() {
     return (
-      <Container style={{border: '1px solid red'}}>
-        <div className="d-flex">
+      <Container className="p-0">
+        <div className="d-flex ">
           <Avatar
             variant="square"
             className="mt-5"
@@ -54,34 +59,30 @@ export default class CommentFilm extends Component {
                 name="bluan"
                 as="textarea"
                 rows={2}
-                style={{ resize: 'none', width: '120vh' }}
+                style={{ resize: "none", width: "120vh" }}
                 onChange={this.changeValueHandle}
                 value={this.state.bluan}
+                onKeyDown={this.onPushCommentHandler}
               />
             </Form.Group>
-            <Button variant="info" className="mb-2 btn-bluan" type="submit">
-              Bình Luận
-            </Button>
           </Form>
         </div>
         {this.state.dataComment.map((comment) => {
           return (
             <div className="d-flex">
-              <div className="mt-2">
+              <div className="mt-4">
                 <img
                   src={comment.avartar}
                   alt=""
                   style={{ width: "75px", height: "75px" }}
                 />
               </div>
-              <div md={8} className="mx-3 my-2">
+              <div md={8} className="mx-3 my-4">
                 <h5>{comment.name}</h5>
                 <p>{comment.content}</p>
                 <div style={{ fontSize: "11px" }}>{comment.date}</div>
               </div>
             </div>
-
-            
           );
         })}
       </Container>
