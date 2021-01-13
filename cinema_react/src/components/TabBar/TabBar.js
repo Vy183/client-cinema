@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   // TabContent,
   // TabPane,
@@ -14,66 +15,30 @@ import {
   Container,
   Button,
 } from "react-bootstrap";
-// import classnames from "classnames";
+
 import TabBarItem from "./TabBarItem";
 // import DetailFilm from '../DetailFilm/DetailFilm';
-import data from "../../assest/dummydata/data"; //! asseTS
 
 import "./TabBarItem.css";
 
-import c7 from "../../assest/img/c7.jpg";
-import c8 from "../../assest/img/c7.png";
-import c9 from "../../assest/img/c8.jpg";
-import c10 from "../../assest/img/c9.png";
-import c11 from "../../assest/img/c10.jpg";
-import c12 from "../../assest/img/c11.jpg";
-
-const listPhimDangChieu = data; //! mô phỏng lấy database
-
-const listPhimSapChieu = [
-  {
-    img: c7,
-    tenPhimEN: "Demon Slayer The Movie: Mugen Train",
-    tenPhimVN: "Thanh Gươm Diệt Quỷ: Chuyến Tàu Vô Tận",
-    id: 7788899445,
-  },
-  {
-    img: c8,
-    tenPhimEN: "Riam Fighting Angel",
-    tenPhimVN: "Riam: Nữ Quái Nổi Loạn",
-    id: 1122334455,
-  },
-  {
-    img: c9,
-    tenPhimEN: "Collectors",
-    tenPhimVN: "Kẻ Săn Mộ",
-    id: 7788994455,
-  },
-  {
-    img: c10,
-    tenPhimEN: "The Banishing",
-    tenPhimVN: "Trục quỷ",
-    id: 2255889966,
-  },
-  {
-    img: c11,
-    tenPhimEN: "Recon",
-    tenPhimVN: "Đội Do Thám",
-    id: 3366997744,
-  },
-  {
-    img: c12,
-    tenPhimEN: "",
-    tenPhimVN: "Hoa Phong Nguyệt Vũ",
-    id: 1144778866,
-  },
-];
-
 function ControlledTabs() {
   const [key, setKey] = useState("phimdangchieu");
+  const [getFilm, setGetFilm] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/client-page/")
+      .then((res) => {
+        console.log(res.data);
+        setGetFilm(res.data.films);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
-    <Container className='mt-4'>
+    <Container className="mt-4">
       <Tabs
         id="controlled-tab-example"
         activeKey={key}
@@ -86,9 +51,9 @@ function ControlledTabs() {
           title="Phim đang chiếu"
         >
           <Row>
-            {listPhimDangChieu.map((phim) => {
+            {getFilm.map((phim) => {
               return (
-                <Col sm="12" md="6" lg="4" key={phim.tenPhimEN}>
+                <Col sm="12" md="6" lg="4" key={phim.EN_name}>
                   <TabBarItem phim={phim} />
                 </Col>
               );
@@ -101,9 +66,9 @@ function ControlledTabs() {
           title="Phim sắp chiếu"
         >
           <Row>
-            {listPhimSapChieu.map((film) => {
+            {getFilm.map((film) => {
               return (
-                <Col sm="12" md="6" lg="4" key={film.tenPhimEN}>
+                <Col sm="12" md="6" lg="4" key={film.EN_name}>
                   <TabBarItem phim={film} />
                 </Col>
               );

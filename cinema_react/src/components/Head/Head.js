@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import axios from "axios";
 
 import "./Head.css";
 import imglogo from "../../assest/img/logo.png";
@@ -11,18 +12,12 @@ import ButtonLogin from "../Login/ButtonLogin";
 export default class Head extends Component {
   state = {
     key: "login",
-    user: "",
   };
 
-  loginSuccess = (user) => {
-    this.setState({ user: user });
-  };
-
-  logout = () => {
-    this.setState({ user: "" });
-  };
+  componentDidMount = () => {};
 
   render() {
+    console.log(this.props)
     return (
       <div className="d-flex head-container" style={{ background: "#f7f9fa" }}>
         <Link to="/">
@@ -41,15 +36,15 @@ export default class Head extends Component {
 
         <div className="m-auto">
           <div className="d-flex">
-            {this.state.user ? (
-              <MenuLogin user={this.state.user} logout={this.logout} />
+            {this.props.user ? (
+              <MenuLogin user={this.props.user} logout={this.props.logout} />
             ) : (
-              <ButtonLogin loginSuccess={this.loginSuccess} />
+              <ButtonLogin loginSuccess={this.props.loginSuccess} />
             )}
           </div>
         </div>
 
-        <Link to='/gio-hang'>
+        <Link to="/gio-hang">
           <div
             className="mr-5 my-3"
             style={{

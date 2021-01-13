@@ -12,6 +12,7 @@ import {
   Backdrop,
 } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
+import { Link } from "react-router-dom";
 
 import BuyCard from "../../components/BuyCard/BuyCard";
 
@@ -90,9 +91,11 @@ function MenuLogin(props) {
                   id="menu-list-grow"
                   onKeyDown={handleListKeyDown}
                 >
-                  <MenuItem onClick={handleClose}>History</MenuItem>
+                  <Link to="/lich-su">
+                    <MenuItem onClick={handleClose}>History</MenuItem>
+                  </Link>
                   <MenuItem>
-                    <span style={{marginTop: '15px'}}>
+                    <span style={{ marginTop: "15px" }}>
                       <Button
                         variant="contained"
                         color="primary"
@@ -120,7 +123,9 @@ function MenuLogin(props) {
                       </Modal>
                     </span>
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <Link to="/trang-ca-nhan">
+                    <MenuItem onClick={handleClose}>My account</MenuItem>
+                  </Link>
                   <MenuItem onClick={props.logout}>Logout</MenuItem>
                 </MenuList>
               </ClickAwayListener>

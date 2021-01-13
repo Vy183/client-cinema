@@ -39,7 +39,9 @@ class Login extends Component {
       .post("http://localhost:4000/login", dataUser)
       .then((res) => {
         // console.log(res.data);
-        const { name, email } = res.data;
+        const { name, email, token } = res.data;
+        // console.log(token);
+        localStorage.setItem("token", token);
         this.props.loginSuccess(name);
       })
       .catch((err) => {

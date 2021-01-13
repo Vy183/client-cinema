@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-// import axios from "axios";
+import axios from "axios";
 import { Container, Button, Col, Row, Breadcrumb } from "react-bootstrap";
 import { Button as MButton } from "@material-ui/core";
 import ConfirmationNumberIcon from "@material-ui/icons/ConfirmationNumber";
@@ -22,13 +22,41 @@ class DetailFilm extends Component {
   };
 
   componentDidMount() {
-    const idPhim = this.props.match.params.idPhim;
+    const token = localStorage.getItem("token");
+    let config = null;
 
-    const dataPhim = data.find((phim) => String(phim.id) === String(idPhim));
-    // console.log(dataPhim);
+    if (token) {
+      config = { headers: { Authorization: `Bearer ${token}` } };
+    }
 
-    this.setState({ dataPhim });
+    const { idPhim } = this.props.match.params;
+    axios
+      .get(`http://localhost:4000/client-page/get-films-id/${idPhim}`, config)
+      .then((res) => {
+        console.log(res.data);
+        // this.setState({ dataPhim: res.data });
+        // console.log(dataPhim);
+        console.log(res.data.films)
+
+        this.setState({ dataPhim: res.data.films });
+        // console.log(this.state.dataPhim);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
+
+  addToCart = () => {
+    const phim = {
+      EN_name: this.state.dataPhim.EN_name,
+      VN_name: this.state.dataPhim.VN_name,
+      price: this.state.dataPhim.price,
+      urlImg: this.state.dataPhim.urlImg,
+      _id: this.state.dataPhim._id,
+    };
+
+    this.props.addToCart(phim);
+  };
 
   render() {
     return (
@@ -44,7 +72,7 @@ class DetailFilm extends Component {
                   Đặt Vé
                 </Breadcrumb.Item>
                 <Breadcrumb.Item className="breadcrumb-item" active>
-                  {this.state.dataPhim.tenPhimVN}
+                  {this.state.dataPhim.VN_name}
                 </Breadcrumb.Item>
               </Breadcrumb>
 
@@ -59,34 +87,55 @@ class DetailFilm extends Component {
                           height: "85%",
                           borderRadius: "4px",
                         }}
-                        src={this.state.dataPhim.img}
-                        alt={this.state.dataPhim.tenPhimEN}
+                        src={this.state.dataPhim.urlImg}
+                        alt={this.state.dataPhim.EN_name}
                       />
                     </Col>
                     <Col md={8}>
                       <div className="list_info" style={{ margin: "0px 30px" }}>
-                        <h3>{this.state.dataPhim.tenPhimEN}</h3>
-                        <h3>{this.state.dataPhim.tenPhimVN}</h3>
+                        <h3>{this.state.dataPhim.EN_name}</h3>
+                        <h3>{this.state.dataPhim.VN_name}</h3>
                         <li>
                           <SlowMotionVideoIcon />
-                          {this.state.dataPhim.tLuong}
+                          {this.state.dataPhim.duration}
                         </li>
 
                         <li>
-                          Thể loại: <span>{this.state.dataPhim.theLoai}</span>
+                          Thể loại:{" "}
+                          <span>
+                            {/* {this.state.dataPhim.types.map(
+                              (type) => type.typeId.type_name
+                            )} */}
+                          </span>
                         </li>
                         <li>
-                          Đạo diễn: <span>{this.state.dataPhim.daoDien}</span>
+                          Đạo diễn:{" "}
+                          <span>
+                            {this.state.dataPhim.directors
+                              .map(
+                                (director) => director.directorId.name_director
+                              )
+                              .join(", ")}
+                          </span>
                         </li>
                         <li>
-                          Diễn viên: <span>{this.state.dataPhim.dienVien}</span>
+                          Diễn viên:{" "}
+                          <span>
+                            {this.state.dataPhim.actors
+                              .map((actor) => actor.actorId.name_actor.trim())
+                              .join(", ")}
+                          </span>
                         </li>
                         <li>
                           Nhà sản xuất:{" "}
-                          <span>{this.state.dataPhim.nhaSXuat}</span>
+                          <span>
+                            {this.state.dataPhim.producers.map(
+                              (producer) => producer.producerId.name
+                            )}
+                          </span>
                         </li>
                         <li>
-                          Quốc gia: <span>{this.state.dataPhim.quocGia}</span>
+                          Quốc gia: <span>{this.state.dataPhim.country}</span>
                         </li>
                         <li>
                           Ngày: <span>{this.state.dataPhim.date}</span>
@@ -108,6 +157,7 @@ class DetailFilm extends Component {
                           color="secondary"
                           className="m-2"
                           startIcon={<AddShoppingCartIcon />}
+                          onClick={this.addToCart}
                         >
                           Thêm vào giỏ hàng
                         </MButton>

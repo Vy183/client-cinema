@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 import {
   Container,
@@ -7,37 +8,40 @@ import {
   // Modal,
   // Fade,
   // Backdrop,
+  CircularProgress,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import { Row, Col, Form } from "react-bootstrap";
+
+const token = localStorage.getItem("token");
+const config = { headers: { Authorization: `Bearer ${token}` } };
 
 const BuyCard = () => {
   const [show, setShow] = useState(false);
-
-  const handleOpen = () => {
-    // setShow(true);
-  };
-
   const handleClose = () => {
     setShow(false);
   };
-
   const [state, setState] = useState({
-    seri: "",
+    serial: "",
     card: "",
-    seri_validate: false,
+    serial_validate: false,
     card_validate: false,
   });
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [loadingFetchCash, setLoadingFetchCash] = useState(false);
+  const [res, setRes] = useState(null);
 
   const changeValueHandler = (e) => {
-    setState({ [e.target.name]: e.target.value });
+    setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  const validateSeriHandler = () => {
-    const seri_temp = state.seri;
-    if (/[A-Za-z][0-9]{6}/.test(seri_temp)) {
-      setState({ seri_validate: false });
+  const validateserialHandler = () => {
+    const serial_temp = state.serial;
+    if (/[A-Za-z][0-9]{6}/.test(serial_temp)) {
+      setState({ ...state, serial_validate: false });
     } else {
-      setState({ seri_validate: true });
+      setState({ serial_validate: true });
     }
   };
 
@@ -51,6 +55,48 @@ const BuyCard = () => {
     }
   };
 
+  const submitFormBuyHandler = (e) => {
+    e.preventDefault();
+
+    setError(null);
+    setSuccess(null);
+
+    const sendData = {
+      serial: state.serial,
+      code: state.card,
+    };
+
+    axios
+      .post("http://localhost:4000/cash", sendData, config)
+      .then((res) => {
+        console.log(res.data);
+        setSuccess(res.data.message);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(err.response.data);
+        setError(err.response.data.message);
+      });
+
+    // setState({ ...state, error: null, success: null });
+  };
+
+  const getCash = () => {
+    setLoadingFetchCash(true);
+    setRes(null);
+    axios
+      .get("http://localhost:4000/cash", config)
+      .then((res) => {
+        setRes(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoadingFetchCash(false);
+      });
+  };
+
   return (
     <Container
       style={{ background: "white", width: "40%", borderRadius: "4px" }}
@@ -58,24 +104,28 @@ const BuyCard = () => {
       <Row className="mt-5">
         <Col>
           <div className="mx-2 my-4">
-            <Form>
-              <Form.Group controlId="formBasicSeri">
-                <Form.Label>Mã Seri</Form.Label>
+            <Form onSubmit={submitFormBuyHandler}>
+              {error ? <Alert severity="error">{error}</Alert> : <></>}
+
+              {success ? <Alert severity="success">{success}</Alert> : <></>}
+
+              <Form.Group controlId="formBasicserial">
+                <Form.Label>Mã serial</Form.Label>
 
                 <Form.Control
-                  placeholder="Mã Seri"
+                  placeholder="Mã serial"
                   className="w-100"
-                  id="outlined-seri"
-                  // label="Số Seri"
+                  id="outlined-serial"
+                  // label="Số serial"
                   variant="outlined"
-                  name="seri"
-                  value={state.seri}
+                  name="serial"
+                  value={state.serial}
                   onChange={changeValueHandler}
-                  isInvalid={state.seri_validate}
-                  onBlur={validateSeriHandler}
+                  // isInvalid={state.serial_validate}
+                  // onBlur={validateserialHandler}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Vui lòng nhập mã seri gồm 1 kí tự và 6 số bất kì
+                  Vui lòng nhập mã serial gồm 1 kí tự và 6 số bất kì
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -90,8 +140,8 @@ const BuyCard = () => {
                   name="card"
                   value={state.card}
                   onChange={changeValueHandler}
-                  isInvalid={state.card_validate}
-                  onBlur={validateCardHandler}
+                  // isInvalid={state.card_validate}
+                  // onBlur={validateCardHandler}
                 />
                 <Form.Control.Feedback type="invalid">
                   Vui lòng nhập mã card gồm 13 số bất kì
@@ -103,7 +153,7 @@ const BuyCard = () => {
                 label="Search field"
                 type="search"
                 variant="outlined"
-                // error={validateSeriHandler}
+                // error={validateserialHandler}
                 // helperText={}
               /> */}
 
@@ -118,7 +168,7 @@ const BuyCard = () => {
                   variant="contained"
                   color="primary"
                   className="mr-3"
-                  onClick={handleOpen}
+                  type="submit"
                 >
                   Mua Thẻ
                 </Button>
@@ -135,6 +185,17 @@ const BuyCard = () => {
           </div>
         </Col>
       </Row>
+      <Button variant="contained" onClick={getCash}>
+        Lấy mã thẻ test
+      </Button>
+      {loadingFetchCash ? <CircularProgress /> : null}
+      {res ? (
+        <div>
+          <h3>Serial: {res.serial}</h3>
+          <h3>Code: {res.code}</h3>
+          <h3>Mệnh giá: {res.money}</h3>
+        </div>
+      ) : null}
     </Container>
   );
 };
