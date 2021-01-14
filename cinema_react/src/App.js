@@ -29,6 +29,7 @@ export default class App extends Component {
     cart: [],
     user: "",
     balance: 0,
+    purchasedFilms: [],
   };
 
   loginSuccess = (user) => {
@@ -42,11 +43,11 @@ export default class App extends Component {
   };
 
   addToCart = (phim) => {
-    console.log(`Xử lý them vào giỏ hàng ở đây
-      lúc chuyển sang trang giỏ hàng thì truyền cái this.state.cart vào.
-      add thì add cái idphim thôi, tới lúc sang trang giỏ hàng thì axios get phim,
-      hoặc k thích thì cứ add là add nguyên cái thông tin phim lên cũng được`);
-    console.log(phim);
+    // console.log(`Xử lý them vào giỏ hàng ở đây
+    //   lúc chuyển sang trang giỏ hàng thì truyền cái this.state.cart vào.
+    //   add thì add cái idphim thôi, tới lúc sang trang giỏ hàng thì axios get phim,
+    //   hoặc k thích thì cứ add là add nguyên cái thông tin phim lên cũng được`);
+    // console.log(phim);
     const newCart = [...this.state.cart];
     const phimTrongList = newCart.find((pTL) => pTL._id === phim._id);
 
@@ -56,6 +57,9 @@ export default class App extends Component {
 
     newCart.push(phim);
     this.setState({ cart: newCart });
+
+    console.log(this.state.cart);
+
     localStorage.setItem("gio_hang", JSON.stringify(newCart));
   };
 
@@ -109,6 +113,7 @@ export default class App extends Component {
   };
 
   render() {
+    // console.log(this.state.purchasedFilms);
     return (
       <div className="App">
         <Head
@@ -123,7 +128,11 @@ export default class App extends Component {
           <Route
             path="/chi-tiet/:idPhim"
             render={(props) => (
-              <DetailFilm {...props} addToCart={this.addToCart} />
+              <DetailFilm
+                {...props}
+                addToCart={this.addToCart}
+                user={this.state.user}
+              />
             )}
           />
           <Route exact path="/" component={HomePage} />

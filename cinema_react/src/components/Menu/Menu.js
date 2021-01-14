@@ -9,7 +9,7 @@ class Menu extends Component {
     main_menu: [
       {
         link: "/mua-ve",
-        title: "MUA VÉ",
+        title: "MUA PHIM",
       },
       {
         link: "/phim",

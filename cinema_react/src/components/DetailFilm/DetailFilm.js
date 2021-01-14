@@ -2,11 +2,19 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "axios";
-import { Container, Button, Col, Row, Breadcrumb } from "react-bootstrap";
+import {
+  Container,
+  Button,
+  Col,
+  Row,
+  Breadcrumb,
+  Modal,
+} from "react-bootstrap";
 import { Button as MButton } from "@material-ui/core";
 import ConfirmationNumberIcon from "@material-ui/icons/ConfirmationNumber";
 import SlowMotionVideoIcon from "@material-ui/icons/SlowMotionVideo";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import MovieIcon from "@material-ui/icons/Movie";
 
 // ?Giả vờ như import vào database
 import data from "../../assest/dummydata/data";
@@ -19,9 +27,19 @@ import CommentFilm from "../CommentFilm/CommentFilm";
 class DetailFilm extends Component {
   state = {
     dataPhim: null,
+    show: false,
   };
 
+  handleShow = () => {
+    this.setState({ show: true });
+  };
+
+  handleClose = () => {
+    this.setState({ show: false });
+  };
   componentDidMount() {
+    window.scrollTo(0, 0);
+
     const token = localStorage.getItem("token");
     let config = null;
 
@@ -36,7 +54,7 @@ class DetailFilm extends Component {
         console.log(res.data);
         // this.setState({ dataPhim: res.data });
         // console.log(dataPhim);
-        console.log(res.data.films)
+        // console.log(res.data.films);
 
         this.setState({ dataPhim: res.data.films });
         // console.log(this.state.dataPhim);
@@ -59,6 +77,7 @@ class DetailFilm extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <Container>
         <Col>
@@ -142,25 +161,47 @@ class DetailFilm extends Component {
                         </li>
                       </div>
                       <div>
-                        <Link to={"/gio-hang/" + this.state.id}>
+                        {this.state.dataPhim.urlFilm ? (
+                          <div>
+                            <MButton
+                              onClick={this.handleShow}
+                              variant="contained"
+                              color="primary"
+                              className="m-2"
+                              startIcon={<MovieIcon />}
+                            >
+                              Xem phim
+                            </MButton>
+
+                            <Modal 
+                              
+                              show={this.state.show}
+                              onHide={this.handleClose}
+                              animation={false}
+                            >
+                              <Modal.Body>
+                                <iframe
+                                  width="460"
+                                  height="315"
+                                  src="https://www.youtube.com/embed/uQWySyw8aC0"
+                                  frameborder="0"
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  allowfullscreen
+                                ></iframe>
+                              </Modal.Body>
+                            </Modal>
+                          </div>
+                        ) : (
                           <MButton
                             variant="contained"
-                            color="primary"
+                            color="secondary"
                             className="m-2"
-                            startIcon={<ConfirmationNumberIcon />}
+                            startIcon={<AddShoppingCartIcon />}
+                            onClick={this.addToCart}
                           >
-                            Mua phim
+                            Thêm vào giỏ hàng
                           </MButton>
-                        </Link>
-                        <MButton
-                          variant="contained"
-                          color="secondary"
-                          className="m-2"
-                          startIcon={<AddShoppingCartIcon />}
-                          onClick={this.addToCart}
-                        >
-                          Thêm vào giỏ hàng
-                        </MButton>
+                        )}
                       </div>
                     </Col>
                   </Row>

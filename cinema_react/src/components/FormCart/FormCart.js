@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Table, Col, Row, Button } from "react-bootstrap";
 import axios from "axios";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import ItemCart from "./ItemCart";
 import "./FormCart.css";
@@ -39,7 +40,6 @@ export default class FormCart extends Component {
     }
   };
 
-  
   render() {
     let totalPrice = 0;
 
@@ -59,18 +59,27 @@ export default class FormCart extends Component {
           );
         })}
 
-        <div className="d-flex my-3" style={{ marginLeft: "55%" }}>
-          <Button
-            variant="success"
-            className="mr-2"
-            onClick={this.postPurchasedFilm}
-            disabled={!this.props.user}
-          >
-            Thanh Toán
-          </Button>
+        {this.props.cart.length != 0 ? (
+          <div className="d-flex my-3" style={{ marginLeft: "55%" }}>
+            <Button
+              variant="success"
+              className="mr-2"
+              onClick={this.postPurchasedFilm}
+              disabled={!this.props.user}
+            >
+              Thanh Toán
+            </Button>
 
-          <button className="btn btn-warning">Tổng Tiền: {totalPrice}đ</button>
-        </div>
+            <button className="btn btn-warning">
+              Tổng Tiền: {totalPrice}đ
+            </button>
+          </div>
+        ) : (
+          <div className='d-flex justify-content-center' style={{textAlign: 'center'}}>
+            <ArrowBackIcon className='mr-4 mt-2'/>
+            <h3>Please Choose Your Film</h3>
+          </div>
+        )}
       </Container>
     );
   }

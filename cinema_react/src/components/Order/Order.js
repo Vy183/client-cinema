@@ -1,9 +1,16 @@
 import React, { Component } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 
+import "./Order.css";
+
 export default class Order extends Component {
+  state = {
+    orders: [],
+    listFilms: [],
+  };
+
   componentDidMount() {
     const token = localStorage.getItem("token");
     axios
@@ -12,6 +19,7 @@ export default class Order extends Component {
       })
       .then((res) => {
         console.log(res.data);
+        this.setState({ orders: res.data.orders });
       })
       .catch((err) => {
         console.log(err);
@@ -23,7 +31,38 @@ export default class Order extends Component {
     }
     return (
       <Container>
-        <h1>Order page</h1>
+        <ul>
+          {this.state.orders.map((order, index) => (
+            <li key={order._id}>
+              <div>
+                <h3>
+                  {new Date(order.purchasedDate).toLocaleDateString("en-US")}
+                </h3>
+                <ul>
+                  {order.films.map((film) => (
+                    <Row>
+                      <Col md={4}>
+                        <img
+                          src={film.filmId.urlImg}
+                          alt=""
+                          style={{
+                            width: "80%",
+                            height: "250px",
+                            margin: "7px 0px",
+                          }}
+                        />
+                      </Col>
+                      <Col md={8}>
+                        <h5>{film.filmId.VN_name}</h5>
+                        <div>Giá: {film.price}</div>
+                      </Col>
+                    </Row>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ul>
       </Container>
     );
   }
